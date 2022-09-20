@@ -75,6 +75,7 @@ mediapipe_simple_subgraph(
         ":face_detection_front_detection_to_roi",
         ":face_landmark_cpu",
         ":face_landmark_landmarks_to_roi",
+        ":face_landmarks_smoothing",
         "//mediapipe/calculators/core:begin_loop_calculator",
         "//mediapipe/calculators/core:clip_vector_size_calculator",
         "//mediapipe/calculators/core:constant_side_packet_calculator",
@@ -87,6 +88,8 @@ mediapipe_simple_subgraph(
         "//mediapipe/modules/face_detection:face_detection_short_range_cpu",
     ],
 )
+
+
 
 mediapipe_simple_subgraph(
     name = "face_landmark_front_gpu",
@@ -137,6 +140,15 @@ mediapipe_files(
     srcs = [
         "face_landmark.tflite",
         "face_landmark_with_attention.tflite",
+    ],
+)
+
+mediapipe_simple_subgraph(
+    name = "face_landmarks_smoothing",
+    graph = "face_landmarks_smoothing.pbtxt",
+    register_as  = "FaceLandmarksSmoothing",
+    deps   = [
+        "//mediapipe/calculators/util:landmarks_smoothing_calculator"
     ],
 )
 

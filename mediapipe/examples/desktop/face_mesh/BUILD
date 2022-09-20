@@ -14,16 +14,20 @@
 
 licenses(["notice"])
 
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+
+
 package(default_visibility = ["//mediapipe/examples:__subpackages__"])
 
-cc_binary(
-    name = "face_mesh_tflite",
-    data = ["//mediapipe/modules/face_landmark:face_landmark_with_attention.tflite"],
-    deps = [
-        "//mediapipe/examples/desktop:simple_run_graph_main",
-        "//mediapipe/graphs/face_mesh:desktop_calculators",
-    ],
-)
+# cc_binary(
+#     name = "face_mesh_tflite",
+#     data = ["//mediapipe/modules/face_landmark:face_landmark_with_attention.tflite"],
+#     deps = [
+#         "//mediapipe/examples/desktop:simple_run_graph_main",
+#         "//mediapipe/graphs/face_mesh:desktop_calculators",
+#     ],
+# )
 
 cc_binary(
     name = "face_mesh_cpu",
@@ -35,11 +39,18 @@ cc_binary(
 )
 
 # Linux only
-cc_binary(
-    name = "face_mesh_gpu",
-    data = ["//mediapipe/modules/face_landmark:face_landmark_with_attention.tflite"],
-    deps = [
-        "//mediapipe/examples/desktop:demo_run_graph_main_gpu",
-        "//mediapipe/graphs/face_mesh:desktop_live_gpu_calculators",
-    ],
+# cc_binary(
+#     name = "face_mesh_gpu",
+#     data = ["//mediapipe/modules/face_landmark:face_landmark_with_attention.tflite"],
+#     deps = [
+#         "//mediapipe/examples/desktop:demo_run_graph_main_gpu",
+#         "//mediapipe/graphs/face_mesh:desktop_live_gpu_calculators",
+#     ],
+# )
+
+
+
+wasm_cc_binary(
+    name = "face_mesh_wasm",
+    cc_target = ":face_mesh_cpu",
 )

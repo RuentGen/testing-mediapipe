@@ -13,14 +13,17 @@
 // limitations under the License.
 //
 // A simple example to print out "Hello World!" from a MediaPipe graph.
-
+#include <emscripten/bind.h>
 #include "mediapipe/framework/calculator_graph.h"
 #include "mediapipe/framework/port/logging.h"
 #include "mediapipe/framework/port/parse_text_proto.h"
 #include "mediapipe/framework/port/status.h"
 
-namespace mediapipe {
 
+using namespace emscripten;
+
+namespace mediapipe {
+EMSCRIPTEN_BINDINGS
 absl::Status PrintHelloWorld() {
   // Configures a simple graph, which concatenates 2 PassThroughCalculators.
   CalculatorGraphConfig config =
